@@ -1,4 +1,8 @@
 {
+  "name": "wofi-bw",
+  "version": 1.0.0,
+  "author": "LordImmaculate",
+  "license": "MIT",
   "devDependencies": {
     "@types/bun": "^1.2.17"
   }
