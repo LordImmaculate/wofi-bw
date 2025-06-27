@@ -1,6 +1,7 @@
 #!/usr/bin/bun
 import { execSync } from "child_process";
 import * as fs from "fs/promises";
+import { authenticator } from "otplib";
 
 type LoginData = {
   id: string;
@@ -109,7 +110,11 @@ switch (mode) {
     output = loginData.data.password || "";
     break;
   case "totp":
-    output = loginData.data.totp || "";
+    if (!loginData.data.totp) {
+      execSync(`notify-send "wofi-bw" "No TOTP available for this login."`);
+      process.exit(0);
+    }
+    output = authenticator.generate(loginData.data.totp.replace(/ /g, ""));
     break;
   case "uri":
     output = loginData.data.uris[0].uri || "";
@@ -118,8 +123,8 @@ switch (mode) {
 
 execSync(`wl-copy "${output}"`);
 execSync(
-  `notify-send "bw-wofi" "${
-    !expired ? "Recent " : null
+  `notify-send "wofi-bw" "${
+    !expired ? "Recent " : ""
   }${mode} copied to clipboard" -h string:x-dunst-stack-tag:wofi-bw`
 );
 

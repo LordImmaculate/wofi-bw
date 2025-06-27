@@ -1,9 +1,21 @@
 {
   "name": "wofi-bw",
-  "version": 1.0.0,
+  "version": "1.0.0",
   "author": "LordImmaculate",
-  "license": "MIT",
   "devDependencies": {
     "@types/bun": "^1.2.17"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "bun build main.ts --outdir dist --target node",
+    "start": "bun run dist/main.js"
+  },
+  "type": "module",
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "otplib": "^12.0.1"
   }
 }
